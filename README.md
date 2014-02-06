@@ -8,11 +8,12 @@ WORK IN PROGRESS, NOTHING HERE, REALLY!
 
 to run, do the following:
 
-'''
+```
    cd app/public
    bower install
    cd ..
    node app.js
-'''
+```
+
 Then connect to localhost:3000 and have fun :-)
 
