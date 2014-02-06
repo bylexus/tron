@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>T-R-O-N</h1>
+
+        <div>
+            <label>Player Name</label>
+            <input type="text" id="playerName" />
+        </div>
+        <div>
+            <button id="createGameBtn">Create Game</button>
+            <span>Game name: <span id="gameName"></span></span>
+            <button id="startGameBtn">Start game!</button>
+        </div>
+        <div>
+            <label>or Join Game:</label>
+            <input type="text" id="joinGameName" />
+            <button id="joinGameBtn">join</button>
+        </div>
+        <div id="msg"></div>
+
+
+
+
+
+        <script src="bower_components/jquery/jquery.min.js"></script>
+        <script src="bower_components/socket.io-client/dist/socket.io.js"></script>
+        <script type="text/javascript">
+            var io = io.connect();
+
+
+            $('#createGameBtn').on('click', function() {
+                $(this).attr('disabled',true);
+                var playerName = $('#playerName').val();
+                io.emit('createGame', {playerName: playerName}, function(data) {
+                        console.log(data);
+                        $('#gameName').html(data.game);
+                });
+            });
+
+            $('#joinGameBtn').on('click', function(){
+                var btn = $(this);
+                var playerName = $('#playerName').val();
+                var gameName = $('#joinGameName').val();
+                btn.attr('disabled',true)
+                io.emit('joinGame',{
+                    playerName: playerName,
+                    gameName: gameName
+                },function(data) {
+                    if (data.success) {
+                        console.log(data);
+                        $(data.others).each(function(index,item) {
+                            $('#msg').append($('<div />').html("Already here: "+item.playerName));
+                        });
+                    } else {
+                        $('#msg').append($('<div />').html(data.error));
+                        btn.attr('disabled',false);
+                    }
+
+                });
+            });
+
+            io.on('playerJoined', function(data) {
+                $('#msg').append($('<div />').html("Player joined: "+data.playerName));
+            });
+
+            $('#startGameBtn').on('click',function(){
+                io.emit('requestGameStart');
+            });
+
+
+        </script>
+    </body>
+</html>

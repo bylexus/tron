@@ -1,0 +1,21 @@
+{
+  "name": "tron",
+  "version": "0.0.0",
+  "authors": [
+    "Alexander Schenkel <aschenkel@kadenpartner.ch>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "bootstrap": "~3.0.3",
+    "socket.io-client": "~0.9.16"
+  }
+}

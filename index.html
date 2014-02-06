@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <canvas id="canvas" width="800" height="600" style="border: 1px solid black"></canvas>
+
+
+  <script type="text/javascript">
+  var c = document.getElementById('canvas');
+  var ctx=c.getContext("2d");
+
+  var Game = {
+    x: 0,
+    y: 50,
+    update: function() {
+      this.x += 2;
+    },
+    draw: function() {
+      ctx.putImageData(this.img,this.x,this.y);
+    }
+  };
+  Game.run = (function(me) {
+    me.img = ctx.createImageData(2,2);
+    me.img.data[0] = 0;
+    me.img.data[1] = 0;
+    me.img.data[2] = 0;
+    me.img.data[3] = 255;
+
+    me.img.data[4] = 0;
+    me.img.data[5] = 0;
+    me.img.data[6] = 0;
+    me.img.data[7] = 255;
+
+    me.img.data[8] = 0;
+    me.img.data[9] = 0;
+    me.img.data[10] = 0;
+    me.img.data[11] = 255;
+
+    me.img.data[12] = 0;
+    me.img.data[13] = 0;
+    me.img.data[14] = 0;
+    me.img.data[15] = 255;
+    
+    return function() {
+      me.update();
+      me.draw();
+    }
+  })(Game);
+  var i = setInterval(Game.run,1000/30);
+
+
+  </script>
+
+</body>
+</html>
